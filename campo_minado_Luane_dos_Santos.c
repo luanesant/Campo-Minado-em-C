@@ -13,6 +13,8 @@
 
 //Declarando as funcoes para serem usadas depois da funcao main();
 void menu(int *opcao, int *nivel, int *numBombas);
+void iniciarMatrizBombas(int nivel, int numBombas, int **mat);
+void imprimirMatriz(int nivel, int **matX);
 
 int main(){
     srand(time(NULL));
@@ -45,6 +47,79 @@ int main(){
 
     } while (tryAgain == 's');
     return 0;
+}
+
+/*Funcao VOID;
+Responsavel por iniciar as bombas em posicao aleatoria e a quantidade ao seu redor
+    - Parametros:
+        - nivel: variavel do tipo inteiro usada para especificar o tamanho da matriz que representa o campo de jogo.
+        - numBombas: variavel do tipo ponteiro para inteiro que indica a quantidade de bombas para o usuario.
+        - mat: variavel do tipo ponteiro de ponteiro que representa a matriz que o usuario ira visualizar.
+*/
+void iniciarMatrizBombas(int nivel, int numBombas, int **mat){
+    int x, y;
+    inicializarMatriz(nivel, 0, mat);
+    while((x = rand()%nivel, y = rand()%nivel), numBombas > 0){
+        if(mat[x][y] != BOMBAS){
+            mat[x][y] = BOMBAS;
+            numBombas--;
+            for(int i = -1; i <= 1; i++) {
+                for(int j = -1; j <= 1; j++) {
+                    int aoRedorX = x + i;
+                    int aoRedorY = y + j;
+                    if(aoRedorX >= 0 && aoRedorX < nivel && aoRedorY >= 0 && aoRedorY < nivel && mat[aoRedorX][aoRedorY] != BOMBAS) {
+                        mat[aoRedorX][aoRedorY]++;
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*Funcao VOID;
+Responsavel por imprimir o campo minado para o usuario
+    - Parametros:
+        - nivel: variavel do tipo inteiro usada para especificar o tamanho da matriz que representa o campo de jogo.
+        - matX: variavel do tipo ponteiro de ponteiro que representa a matriz que o usuario ira visualizar.
+*/
+void imprimirMatriz(int nivel, int **matX){
+    printf("    ");
+    for (int j = 0; j < nivel; j++) {
+        printf("%2d ", j+1);
+    }
+    printf("\n");
+    printf("    ");
+    for (int j = 0; j < nivel; j++) {
+        printf("___", j+1);
+    }
+    printf("\n");
+    for(int i = 0; i < nivel; i++){
+        printf("%2d |", i+1);
+        for(int j = 0; j < nivel; j++){
+            if (matX[i][j] == USERX  ){
+                 printf("\033[1;32m X \033[0m");
+            }else{
+                switch(matX[i][j]){
+                    case BOMBAS:
+                        printf("\033[1;35m%2d \033[0m", matX[i][j]);
+                        break;
+                    case 0:
+                        printf("%2d ", matX[i][j]);
+                        break;
+                    case 1:
+                        printf("\033[1;34m%2d \033[0m", matX[i][j]);
+                        break;
+                    case 2:
+                        printf("\033[1;32m%2d \033[0m", matX[i][j]);
+                        break;
+                    default:
+                        printf("\033[1;31m%2d \033[0m", matX[i][j]);
+                        break;
+                    }
+            }
+        }
+        printf("\n");
+    }
 }
 
 /*Funcao VOID;
