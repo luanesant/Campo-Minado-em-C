@@ -20,6 +20,7 @@ void liberarCoordenada(int nivel, int cordUserX, int cordUserY, int **mat, int *
 void mostrarFraseDeNivel(int *opcao, int nivel);
 int campoCompleto(int nivel, int **mat, int **matX);
 void inicializarMatriz(int nivel, int valorInicial, int **mat);
+void limparTela();
 
 /*Na funcao main() instanciamos todo o nosso campo e fazemos a logica do loop de tentar novamente.*/
 int main(){
@@ -58,6 +59,17 @@ int main(){
 
     } while (tryAgain == 's');
     return 0;
+}
+
+/*Funcao VOID;
+Limpa a tela do terminal dependendo do SO usado
+*/
+void limparTela() {
+    #ifdef _WIN32
+        system("cls");  
+    #else
+        system("clear");  
+    #endif
 }
 
 /*Funcao VOID;
@@ -107,40 +119,45 @@ void iniciarJogo(int *opcao, int nivel, int **mat, int **matX){
     mostrarFraseDeNivel(opcao, nivel);
 
     int win = 0, gameOver = 0;
-    int cordUserX, cordUserY;
+    int cordUserX, cordUserY, coordenadas;
     imprimirMatriz(nivel, matX);
     printf("\n\033[1;32mDigite as cordenadas x,y: \033[0m");
 
 
     while(gameOver == 0){
-        scanf("%d,%d", &cordUserX, &cordUserY);
-        if(cordUserX-1 >= 0 && cordUserX-1 < nivel && cordUserY-1 >= 0 && cordUserY-1 < nivel){
-            if(matX[cordUserX-1][cordUserY-1] == USERX){
-                system("cls");
-                mostrarFraseDeNivel(opcao, nivel);
-                if(mat[cordUserX-1][cordUserY-1] == BOMBAS){
-                    matX[cordUserX-1][cordUserY-1] = BOMBAS;
-                    imprimirMatriz(nivel, matX);
-                    win = 0;
-                    gameOver = 1;
-                }else{
-                    liberarCoordenada(nivel, cordUserX-1, cordUserY-1, mat, matX);
-                    imprimirMatriz(nivel, matX);
-                    if(campoCompleto(nivel, mat, matX)){
-                        win = 1;
+        coordenadas = scanf("%d,%d", &cordUserX, &cordUserY);
+        if(coordenadas == 2){
+           if(cordUserX-1 >= 0 && cordUserX-1 < nivel && cordUserY-1 >= 0 && cordUserY-1 < nivel){
+                if(matX[cordUserX-1][cordUserY-1] == USERX){
+                    limparTela();
+                    mostrarFraseDeNivel(opcao, nivel);
+                    if(mat[cordUserX-1][cordUserY-1] == BOMBAS){
+                        matX[cordUserX-1][cordUserY-1] = BOMBAS;
+                        imprimirMatriz(nivel, matX);
+                        win = 0;
                         gameOver = 1;
-                    }else {
-                        printf("\n\033[1;32mDigite as cordenadas x,y: \033[0m");
+                    }else{
+                        liberarCoordenada(nivel, cordUserX-1, cordUserY-1, mat, matX);
+                        imprimirMatriz(nivel, matX);
+                        if(campoCompleto(nivel, mat, matX)){
+                            win = 1;
+                            gameOver = 1;
+                        }else {
+                            printf("\n\033[1;32mDigite as cordenadas x,y: \033[0m");
+                        }
                     }
+                }else{
+                    printf("\n\033[1;31mOPS! Voce ja tentou essas danadinho!\033[0m");
+                    printf("\n\033[1;32mDigite as novas cordenadas x,y: \033[0m");
                 }
+
             }else{
-                printf("\n\033[1;31mOPS! Voce ja tentou essas danadinho!\033[0m");
+                printf("\n\033[1;31mOPS!! Coordenadas inexistentes \(-_-)/\033[0m");
                 printf("\n\033[1;32mDigite as novas cordenadas x,y: \033[0m");
             }
-
         }else{
-            printf("\n\033[1;31mOPS!! Coordenadas inexistentes \(-_-)/\033[0m");
-            printf("\n\033[1;32mDigite as novas cordenadas x,y: \033[0m");
+            printf("\n\033[1;31mOPS!! Entrada inválida. \(-_-)/\033[0m");
+            printf("\n\033[1;32mDigite as cordenadas x,y: \033[0m");
         }
     }
 
@@ -284,7 +301,7 @@ Responsavel por mostrar o menu de niveis para o usuario
         - numBombas: variavel do tipo ponteiro para inteiro que indica a quantidade de bombas para o usuario.
 */
 void menu(int *opcao, int *nivel, int *numBombas){
-    system("cls");
+    limparTela();
     int op;
     printf("Escolha o nivel do Jogo:");
     printf("\n1 - Facil\n2 - Normal\n3 - Dificil\n");
@@ -312,10 +329,9 @@ void menu(int *opcao, int *nivel, int *numBombas){
     default:
         printf("\n\nOpcao INVALIDA!\nTente Novamente\n\n");
         system("pause");
-        system("cls");
         menu(opcao, nivel, numBombas);
         break;
     }
 
-    system("cls");
+    limparTela();
 }
