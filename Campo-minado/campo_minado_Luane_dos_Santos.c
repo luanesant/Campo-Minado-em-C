@@ -4,10 +4,10 @@
 
 #define BOMBAS -1
 #define USERX -2
-#define FACIL 2
+#define FACIL 10
 #define MEDIO 20
 #define DIFICIL 30
-#define FACIL_NUM_BOMBAS 1
+#define FACIL_NUM_BOMBAS 3
 #define MEDIO_NUM_BOMBAS 6
 #define DIFICIL_NUM_BOMBAS 9
 
