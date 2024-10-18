@@ -15,7 +15,13 @@
 void menu(int *opcao, int *nivel, int *numBombas);
 void iniciarMatrizBombas(int nivel, int numBombas, int **mat);
 void imprimirMatriz(int nivel, int **matX);
+void iniciarJogo(int *opcao, int nivel, int **mat, int **matX);
+void liberarCoordenada(int nivel, int cordUserX, int cordUserY, int **mat, int **matX);
+void mostrarFraseDeNivel(int *opcao, int nivel);
+int campoCompleto(int nivel, int **matX);
+void inicializarMatriz(int nivel, int valorInicial, int **mat);
 
+/*Na funcao main() instanciamos todo o nosso campo e fazemos a logica do loop de tentar novamente.*/
 int main(){
     srand(time(NULL));
     char tryAgain;
@@ -30,6 +36,11 @@ int main(){
             mat[i] = (int*) malloc(nivel * sizeof(int));
             matX[i] = (int*) malloc(nivel * sizeof(int));
         }
+
+        inicializarMatriz(nivel, USERX, matX);
+        iniciarMatrizBombas(nivel, numBombas, mat);
+        //imprimirMatriz(nivel, mat);
+        iniciarJogo(&op, nivel, mat, matX);
 
         printf("Tentar novamente? (s/n): ");
         scanf(" %c", &tryAgain);
@@ -47,6 +58,149 @@ int main(){
 
     } while (tryAgain == 's');
     return 0;
+}
+
+/*Funcao VOID;
+Inicializa uma matriz qualquer que seja quadrada, com um valor pre-definido.
+    - Parametros:
+        - nivel : variavel do tipo inteiro usada para dizer o tamanho da matriz;
+        - valorInicial : variavel do tipo inteiro usada para iniciar os elementos da matriz;
+        - mat : variavel do tipo ponteiro de ponteiro usada de molde, ou seja, e uma matriz generica que recebe um endereco de outra matriz para altera-la;
+*/
+void inicializarMatriz(int nivel, int valorInicial, int **mat){
+    for(int i = 0; i < nivel; i++){
+        for(int j = 0; j < nivel; j++){
+            mat[i][j] = valorInicial;
+        }
+    }
+}
+
+/*Funcao Int;
+Retorna a verificacao se o campo da matriz principal esta completo ou nao para o usuario continuar o jogo.
+    - Parametros:
+        - nivel : variavel do tipo inteiro usada para dizer o tamanho da matriz;
+        - mat : variavel do tipo ponteiro de ponteiro usada de molde para a matriz principal do campo, recebe um endereco de outra matriz para altera-la;
+        - mat : variavel do tipo ponteiro de ponteiro usada de molde para a matriz principal do usuario, recebe um endereco de outra matriz para altera-la;
+*/
+int campoCompleto(int nivel, int **matX){
+    int continuarJogo = 1;
+    for(int i = 0; i < nivel; i++){
+        for(int j = 0; j < nivel; j++){
+           if(matX[i][j] == USERX && matX[i][j] != BOMBAS){
+                continuarJogo = 0;
+            }
+        }
+    }
+
+    return continuarJogo;
+}
+
+/*Funcao VOID;
+Responsavel por fazer a iniciacao do jogo e exibicao do campo minado para o usuarip
+    - Parametros:
+        - opcao: variavel do tipo ponteiro para inteiro que indica a opcao de nivel de dificuldade escolhida pelo usuario.
+        - nivel: variavel do tipo inteiro usada para especificar o tamanho da matriz que representa o campo de jogo.
+        - mat: variavel do tipo ponteiro de ponteiro que representa a matriz principal do campo, contendo a posicao das bombas e o numero de bombas adjacentes.
+        - matX: variavel do tipo ponteiro de ponteiro que representa a matriz do usuario, que armazena as coordenadas que o usuario ja abriu durante o jogo.
+*/
+void iniciarJogo(int *opcao, int nivel, int **mat, int **matX){
+    mostrarFraseDeNivel(opcao, nivel);
+
+    int win = 0, gameOver = 0;
+    int cordUserX, cordUserY;
+    imprimirMatriz(nivel, matX);
+    printf("\n\033[1;32mDigite as cordenadas x,y: \033[0m");
+
+
+    while(gameOver == 0){
+        scanf("%d,%d", &cordUserX, &cordUserY);
+        if(cordUserX-1 >= 0 && cordUserX-1 < nivel && cordUserY-1 >= 0 && cordUserY-1 < nivel){
+            if(matX[cordUserX-1][cordUserY-1] == USERX){
+                system("cls");
+                mostrarFraseDeNivel(opcao, nivel);
+                if(mat[cordUserX-1][cordUserY-1] == BOMBAS){
+                    matX[cordUserX-1][cordUserY-1] = BOMBAS;
+                    imprimirMatriz(nivel, matX);
+                    win = 0;
+                    gameOver = 1;
+                }else if(campoCompleto(nivel, matX)){
+                    liberarCoordenada(nivel, cordUserX-1, cordUserY-1, mat, matX);
+                    imprimirMatriz(nivel, matX);
+                    win = 1;
+                    gameOver = 1;
+                }else{
+                    liberarCoordenada(nivel, cordUserX-1, cordUserY-1, mat, matX);
+                    imprimirMatriz(nivel, matX);
+                    printf("\n\033[1;32mDigite as cordenadas x,y: \033[0m");
+                }
+            }else{
+                printf("\n\033[1;31mOPS! Voce ja tentou essas danadinho!\033[0m");
+                printf("\n\033[1;32mDigite as novas cordenadas x,y: \033[0m");
+            }
+
+        }else{
+            printf("\n\033[1;31mOPS!! Coordenadas inexistentes \(-_-)/\033[0m");
+            printf("\n\033[1;32mDigite as novas cordenadas x,y: \033[0m");
+        }
+    }
+
+    if(win){
+        printf("\n\n\033[1;32m(=^.^=) Parabens, vc eh fera /(0o0) \033[0m\n\n");
+        printf("\033[1;31mCampo Minado do Jogo\033[0m\n");
+        imprimirMatriz(nivel, matX);
+        printf("\n\033[1;32mCampo Minado Resultado Final\033[0m\n");
+        imprimirMatriz(nivel, mat);
+    }else{
+        printf("\t\n\n\033[1;31mGAME OVER :-(\033[0m\n\n");
+        printf("\033[1;31mCampo Minado Resultado Final\033[0m\n");
+        imprimirMatriz(nivel, mat);
+    }
+}
+
+/*Funcao VOID;
+Responsavel por fazer liberacao das coordenadas na matriz do usuario;
+    - Parametros:
+        - nivel: variavel do tipo inteiro que indica o tamanho da matriz, determinando o numero de linhas e colunas no campo de jogo.
+        - cordUserX: variavel do tipo inteiro que representa a coordenada X  que e a linha escolhida pelo usuario para abrir uma posicao no campo.
+        - cordUserY: variavel do tipo inteiro que representa a coordenada Y que e a coluna escolhida pelo usuario para abrir uma posicao no campo.
+        - mat: variavel do tipo ponteiro de ponteiro que representa a matriz principal do campo, contendo a posicao das bombas e o numero de bombas adjacentes.
+        - matX: variavel do tipo ponteiro de ponteiro que representa a matriz do usuario, que armazena as coordenadas que o usuario ja abriu.
+*/
+void liberarCoordenada(int nivel, int cordUserX, int cordUserY, int **mat, int **matX){
+    int contMinas = 0;
+    for(int i = -1; i <= 1; i++) {
+        for(int j = -1; j <= 1; j++) {
+                int aoRedorX = cordUserX + i;
+                int aoRedorY = cordUserY + j;
+                if(aoRedorX >= 0 && aoRedorX < nivel && aoRedorY >= 0 && aoRedorY < nivel && mat[aoRedorX][aoRedorY] == BOMBAS) {
+                    contMinas++;
+                }
+        }
+    }
+
+    matX[cordUserX][cordUserY] = contMinas;
+}
+
+/*Funcao VOID;
+REsponsavel por mostrar o titulo do campo minado durante o jogo
+    - Parametros:
+        - opcao: variavel do tipo ponteiro para inteiro que indica a opcao de nivel de dificuldade escolhida pelo usuario.
+        - nivel: variavel do tipo inteiro usada para especificar o tamanho da matriz que representa o campo de jogo.
+*/
+void mostrarFraseDeNivel(int *opcao, int nivel){
+    switch (*opcao){
+    case 1:
+        printf("\033[1;32mCAMPO MINADO NIVEL FACIL (%dx%d)\033[0m\n",nivel,nivel);
+        break;
+    case 2:
+        printf("\033[1;32mCAMPO MINADO NIVEL MEDIO (%dx%d)\033[0m\n",nivel,nivel);
+        break;
+    case 3:
+        printf("\033[1;32mCAMPO MINADO NIVEL DIFICIL (%dx%d)\033[0m\n",nivel,nivel);
+        break;
+    default:
+        break;
+    }
 }
 
 /*Funcao VOID;
