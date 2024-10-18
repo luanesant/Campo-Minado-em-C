@@ -4,10 +4,10 @@
 
 #define BOMBAS -1
 #define USERX -2
-#define FACIL 10
+#define FACIL 2
 #define MEDIO 20
 #define DIFICIL 30
-#define FACIL_NUM_BOMBAS 3
+#define FACIL_NUM_BOMBAS 1
 #define MEDIO_NUM_BOMBAS 6
 #define DIFICIL_NUM_BOMBAS 9
 
@@ -18,7 +18,7 @@ void imprimirMatriz(int nivel, int **matX);
 void iniciarJogo(int *opcao, int nivel, int **mat, int **matX);
 void liberarCoordenada(int nivel, int cordUserX, int cordUserY, int **mat, int **matX);
 void mostrarFraseDeNivel(int *opcao, int nivel);
-int campoCompleto(int nivel, int **matX);
+int campoCompleto(int nivel, int **mat, int **matX);
 void inicializarMatriz(int nivel, int valorInicial, int **mat);
 
 /*Na funcao main() instanciamos todo o nosso campo e fazemos a logica do loop de tentar novamente.*/
@@ -39,7 +39,7 @@ int main(){
 
         inicializarMatriz(nivel, USERX, matX);
         iniciarMatrizBombas(nivel, numBombas, mat);
-        //imprimirMatriz(nivel, mat);
+        imprimirMatriz(nivel, mat);
         iniciarJogo(&op, nivel, mat, matX);
 
         printf("Tentar novamente? (s/n): ");
@@ -82,11 +82,11 @@ Retorna a verificacao se o campo da matriz principal esta completo ou nao para o
         - mat : variavel do tipo ponteiro de ponteiro usada de molde para a matriz principal do campo, recebe um endereco de outra matriz para altera-la;
         - mat : variavel do tipo ponteiro de ponteiro usada de molde para a matriz principal do usuario, recebe um endereco de outra matriz para altera-la;
 */
-int campoCompleto(int nivel, int **matX){
+int campoCompleto(int nivel, int **mat, int **matX){
     int continuarJogo = 1;
     for(int i = 0; i < nivel; i++){
         for(int j = 0; j < nivel; j++){
-           if(matX[i][j] == USERX && matX[i][j] != BOMBAS){
+           if(matX[i][j] == USERX && mat[i][j] != BOMBAS){
                 continuarJogo = 0;
             }
         }
@@ -123,15 +123,15 @@ void iniciarJogo(int *opcao, int nivel, int **mat, int **matX){
                     imprimirMatriz(nivel, matX);
                     win = 0;
                     gameOver = 1;
-                }else if(campoCompleto(nivel, matX)){
-                    liberarCoordenada(nivel, cordUserX-1, cordUserY-1, mat, matX);
-                    imprimirMatriz(nivel, matX);
-                    win = 1;
-                    gameOver = 1;
                 }else{
                     liberarCoordenada(nivel, cordUserX-1, cordUserY-1, mat, matX);
                     imprimirMatriz(nivel, matX);
-                    printf("\n\033[1;32mDigite as cordenadas x,y: \033[0m");
+                    if(campoCompleto(nivel, mat, matX)){
+                        win = 1;
+                        gameOver = 1;
+                    }else {
+                        printf("\n\033[1;32mDigite as cordenadas x,y: \033[0m");
+                    }
                 }
             }else{
                 printf("\n\033[1;31mOPS! Voce ja tentou essas danadinho!\033[0m");
@@ -145,10 +145,10 @@ void iniciarJogo(int *opcao, int nivel, int **mat, int **matX){
     }
 
     if(win){
-        printf("\n\n\033[1;32m(=^.^=) Parabens, vc eh fera /(0o0) \033[0m\n\n");
+        printf("\n\n\033[1;35m(=^.^=) Parabens, vc eh fera\033[0m\n\n");
         printf("\033[1;31mCampo Minado do Jogo\033[0m\n");
         imprimirMatriz(nivel, matX);
-        printf("\n\033[1;32mCampo Minado Resultado Final\033[0m\n");
+        printf("\n\033[1;31mCampo Minado Final\033[0m\n");
         imprimirMatriz(nivel, mat);
     }else{
         printf("\t\n\n\033[1;31mGAME OVER :-(\033[0m\n\n");
