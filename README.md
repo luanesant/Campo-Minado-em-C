@@ -1,6 +1,6 @@
-## Olá galera, como vão?. 😊
+## Olá galera, como vão? 😊
 
-### Esse repositório foi criado por mim (Luane dos Santos), aluna de Engenharia de Software na [UFAM](https://icomp.ufam.edu.br/) 
+### Objetivo!
 O que você verá por aqui?? Então, o objetivo era fazer um campo minado interativo em C e empregar os conceitos de alocação dinâmica de matrizes construídas como vetor de
 ponteiros.
 
@@ -22,3 +22,8 @@ mensagem “game over” deve ser impressa na tela seguida da matriz original mo
 todos os valores sem os ‘x’.
 
 ### Mídias do Projeto!
+
+:bar_chart: 
+<div align='center'>   
+Criado por Luane dos Santos, aluna de Engenharia de Software na [UFAM](https://icomp.ufam.edu.br/), Profº [Juan Colonna](https://www.linkedin.com/in/juan-colonna-700bba56/) da disciplina Algoritmos e Estrutura de Dados I.
+</div>
