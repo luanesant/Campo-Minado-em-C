@@ -25,6 +25,5 @@ todos os valores sem os ‘x’.
 
 ##
 <div align='center'>   
-    [LightRAG Introduction Video](https://youtu.be/oageL-1I0GE)
-Criado por Luane dos Santos, aluna de Engenharia de Software na <p>[UFAM] (https://icomp.ufam.edu.br/), Profº [Juan Colonna](https://www.linkedin.com/in/juan-colonna-700bba56/) da disciplina Algoritmos e Estrutura de Dados I.
+Criado por Luane dos Santos, aluna de Engenharia de Software na <a href="https://icomp.ufam.edu.br/">UFAM</a>, Profº  <a href="https://www.linkedin.com/in/juan-colonna-700bba56">Juan Colonna</a> da disciplina Algoritmos e Estrutura de Dados I.
 </div>
