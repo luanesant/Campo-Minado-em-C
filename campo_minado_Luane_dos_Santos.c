@@ -43,10 +43,10 @@ int main(){
         iniciarJogo(&op, nivel, mat, matX);
 
         printf("Tentar novamente? (s/n): ");
-        scanf(" %c", &tryAgain);
+        scanf("%c", &tryAgain);
         while (tryAgain != 's' && tryAgain != 'n') {
             printf("Opcao invalida. Deseja tentar novamente? (s/n): ");
-            scanf(" %c", &tryAgain);
+            scanf("%c", &tryAgain);
         }
 
         for(int i = 0; i < nivel; i++){
