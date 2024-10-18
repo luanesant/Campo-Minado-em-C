@@ -23,7 +23,7 @@ todos os valores sem os ‘x’.
 
 ### Mídias do Projeto!
 
-:bar_chart: 
+##
 <div align='center'>   
 Criado por Luane dos Santos, aluna de Engenharia de Software na [UFAM](https://icomp.ufam.edu.br/), Profº [Juan Colonna](https://www.linkedin.com/in/juan-colonna-700bba56/) da disciplina Algoritmos e Estrutura de Dados I.
 </div>
