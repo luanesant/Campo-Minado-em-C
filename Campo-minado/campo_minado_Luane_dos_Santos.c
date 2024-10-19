@@ -7,7 +7,7 @@
 #define FACIL 10
 #define MEDIO 20
 #define DIFICIL 30
-#define FACIL_NUM_BOMBAS 3
+#define FACIL_NUM_BOMBAS 50
 #define MEDIO_NUM_BOMBAS 6
 #define DIFICIL_NUM_BOMBAS 9
 
@@ -33,21 +33,37 @@ int main(){
         int **mat = (int**) malloc(nivel * sizeof(int*));
         int **matX = (int**) malloc(nivel * sizeof(int*));
 
+       if (mat == NULL || matX == NULL) {
+            printf("Erro ao alocar memória para o jogo.\n");
+            free(mat);
+            free(matX);
+            return 1;
+        }
+
         for(int i = 0; i < nivel; i++){
             mat[i] = (int*) malloc(nivel * sizeof(int));
             matX[i] = (int*) malloc(nivel * sizeof(int));
+            
+        if (mat[i] == NULL || matX[i] == NULL) {
+                printf("Erro ao alocar memória para o jogo.\n");
+                free(mat[i]);
+                free(matX[i]);
+                free(mat);
+                free(matX);
+                return 1;
+            }
         }
 
         inicializarMatriz(nivel, USERX, matX);
         iniciarMatrizBombas(nivel, numBombas, mat);
-        imprimirMatriz(nivel, mat);
+       // imprimirMatriz(nivel, mat);
         iniciarJogo(&op, nivel, mat, matX);
 
         printf("Tentar novamente? (s/n): ");
-        scanf("%c", &tryAgain);
+        scanf(" %c", &tryAgain);
         while (tryAgain != 's' && tryAgain != 'n') {
-            printf("Opcao invalida. Deseja tentar novamente? (s/n): ");
-            scanf("%c", &tryAgain);
+            printf("\nOpcao invalida. Deseja tentar novamente? (s/n): ");
+            scanf(" %c", &tryAgain);
         }
 
         for(int i = 0; i < nivel; i++){
@@ -156,8 +172,9 @@ void iniciarJogo(int *opcao, int nivel, int **mat, int **matX){
                 printf("\n\033[1;32mDigite as novas cordenadas x,y: \033[0m");
             }
         }else{
-            printf("\n\033[1;31mOPS!! Entrada inválida. \(-_-)/\033[0m");
+            printf("\n\033[1;31mOPS!! Entrada invalida. \(-_-)/\033[0m");
             printf("\n\033[1;32mDigite as cordenadas x,y: \033[0m");
+            while (getchar() != '\n');
         }
     }
 
@@ -261,14 +278,14 @@ void imprimirMatriz(int nivel, int **matX){
     printf("\n");
     printf("    ");
     for (int j = 0; j < nivel; j++) {
-        printf("___", j+1);
+        printf("___");
     }
     printf("\n");
     for(int i = 0; i < nivel; i++){
         printf("%2d |", i+1);
         for(int j = 0; j < nivel; j++){
             if (matX[i][j] == USERX  ){
-                 printf("\033[1;32m X \033[0m");
+                 printf("\033[0;33m X \033[0m");
             }else{
                 switch(matX[i][j]){
                     case BOMBAS:
@@ -329,6 +346,7 @@ void menu(int *opcao, int *nivel, int *numBombas){
     default:
         printf("\n\nOpcao INVALIDA!\nTente Novamente\n\n");
         system("pause");
+        while (getchar() != '\n');
         menu(opcao, nivel, numBombas);
         break;
     }
