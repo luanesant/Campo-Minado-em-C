@@ -21,7 +21,13 @@ matriz.
 mensagem “game over” deve ser impressa na tela seguida da matriz original mostrando
 todos os valores sem os ‘x’.
 
-### Mídias do Projeto!
+## Mídias do Projeto!
+### Nível Fácil
+![Fácil](assets/campo-facil.png)
+### Nível Médio
+![Médio](assets/campo-medio.png)
+### Nível Difícil
+![Difícil](assets/campo-dificil.png)
 
 ##
 <div align='center'>   
