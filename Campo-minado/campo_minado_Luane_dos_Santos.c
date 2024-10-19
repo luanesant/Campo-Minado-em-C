@@ -29,51 +29,68 @@ int main(){
     do {
         int op, nivel, numBombas;
         menu(&op, &nivel, &numBombas);
+         int **mat,**matX;
+        if (op != 4){
+            mat = (int**) malloc(nivel * sizeof(int*));
+            matX = (int**) malloc(nivel * sizeof(int*));
 
-        int **mat = (int**) malloc(nivel * sizeof(int*));
-        int **matX = (int**) malloc(nivel * sizeof(int*));
-
-       if (mat == NULL || matX == NULL) {
-            printf("Erro ao alocar memória para o jogo.\n");
-            free(mat);
-            free(matX);
-            return 1;
-        }
-
-        for(int i = 0; i < nivel; i++){
-            mat[i] = (int*) malloc(nivel * sizeof(int));
-            matX[i] = (int*) malloc(nivel * sizeof(int));
-            
-        if (mat[i] == NULL || matX[i] == NULL) {
+        if (mat == NULL || matX == NULL) {
                 printf("Erro ao alocar memória para o jogo.\n");
-                free(mat[i]);
-                free(matX[i]);
                 free(mat);
                 free(matX);
                 return 1;
             }
-        }
 
-        inicializarMatriz(nivel, USERX, matX);
-        iniciarMatrizBombas(nivel, numBombas, mat);
-       // imprimirMatriz(nivel, mat);
-        iniciarJogo(&op, nivel, mat, matX);
+            for(int i = 0; i < nivel; i++){
+                mat[i] = (int*) malloc(nivel * sizeof(int));
+                matX[i] = (int*) malloc(nivel * sizeof(int));
+                
+            if (mat[i] == NULL || matX[i] == NULL) {
+                    printf("Erro ao alocar memória para o jogo.\n");
+                    free(mat[i]);
+                    free(matX[i]);
+                    free(mat);
+                    free(matX);
+                    return 1;
+                }
+            }
 
-        printf("Tentar novamente? (s/n): ");
-        scanf(" %c", &tryAgain);
-        while (tryAgain != 's' && tryAgain != 'n') {
-            printf("\nOpcao invalida. Deseja tentar novamente? (s/n): ");
+            inicializarMatriz(nivel, USERX, matX);
+            iniciarMatrizBombas(nivel, numBombas, mat);
+            // imprimirMatriz(nivel, mat);
+            iniciarJogo(&op, nivel, mat, matX);
+
+            printf("Tentar novamente? (s/n): ");
             scanf(" %c", &tryAgain);
-        }
+            while (tryAgain != 's' && tryAgain != 'n') {
+                printf("\nOpcao invalida. Deseja tentar novamente? (s/n): ");
+                scanf(" %c", &tryAgain);
+            }
 
-        for(int i = 0; i < nivel; i++){
-            free(mat[i]);
-            free(matX[i]);
-        }
-        free(mat);
-        free(matX);
+            for(int i = 0; i < nivel; i++){
+                free(mat[i]);
+                free(matX[i]);
+            }
+            free(mat);
+            free(matX);
+        }else{
+            printf("\033[1;32mObrigado por jogar!!\n Ate a proxima\033[0m\n");
+            tryAgain = 'n';
+            if (mat != NULL || matX != NULL){
+                for(int i = 0; i < nivel; i++){
+                    free(mat[i]);
+                    free(matX[i]);
+                }
+            }
+            
+            free(mat);
+            free(matX);
 
+            return 1;
+        }
     } while (tryAgain == 's');
+
+     printf("\033[1;32mObrigado por jogar!!\n Ate a proxima\033[0m\n");
     return 0;
 }
 
@@ -321,7 +338,7 @@ void menu(int *opcao, int *nivel, int *numBombas){
     limparTela();
     int op;
     printf("Escolha o nivel do Jogo:");
-    printf("\n1 - Facil\n2 - Normal\n3 - Dificil\n");
+    printf("\n1 - Facil\n2 - Normal\n3 - Dificil\n4 - Sair\n");
     printf("Opcao: ");
     scanf("%d", &op);
 
@@ -343,6 +360,11 @@ void menu(int *opcao, int *nivel, int *numBombas){
         *nivel = DIFICIL;
         *numBombas = DIFICIL_NUM_BOMBAS;
         break;
+
+    case 4:
+        *opcao = op;
+        break;
+
     default:
         printf("\n\nOpcao INVALIDA!\nTente Novamente\n\n");
         system("pause");
