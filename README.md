@@ -1,4 +1,5 @@
 ## Olá galera, como vão? 🖖🏽😊
+Bem-vindos ao campo minado interativo em C! 💣💥
 
 ### Objetivo!
 O que você verá por aqui?? Então, o objetivo era fazer um campo minado interativo em C e empregar os conceitos de alocação dinâmica de matrizes construídas como vetor de
