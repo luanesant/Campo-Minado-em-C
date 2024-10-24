@@ -42,7 +42,7 @@ $ wsl --install
 $ sudo apt update
 $ sudo apt install gcc
 
-# •	Linux (Ubuntu/Debian)
+# •	Linux - Ubuntu ou Debian
 $ sudo apt update
 $ sudo apt install gcc
 
