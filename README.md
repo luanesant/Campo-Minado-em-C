@@ -29,6 +29,32 @@ todos os valores sem os ‘x’.
 ### Nível Difícil
 ![Difícil](assets/campo-dificil.png)
 
+## Como executar!
+
+Primeiramente, verifique se o seu computador tem o compilador GCC instalado.
+Caso não tenha, siga as dicas abaixo 👇🏽.
+
+```bash
+
+# •	Windows: Execute no terminal
+$ wsl --install
+$ sudo apt update
+$ sudo apt install gcc
+
+# •	Linux (Ubuntu/Debian): Execute no terminal
+$ sudo apt update
+$ sudo apt install gcc
+
+```
+para executar o programa siga os comandos entre na pasta do projeto Campo-Minado-em-C e abra a pasta Campo-minado, e rode o comando abaixo no seu terminal 👇🏽
+
+```bash
+
+$ gcc -o campo_minado campo_minado_luanedossantoslopes.c
+$ ./campo_minado
+
+```
+
 ##
 <div align='center'>   
 Criado por Luane dos Santos, aluna de Engenharia de Software na <a href="https://icomp.ufam.edu.br/">UFAM</a>, Profº  <a href="https://www.linkedin.com/in/juan-colonna-700bba56">Juan Colonna</a> da disciplina Algoritmos e Estrutura de Dados I.
