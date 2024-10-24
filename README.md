@@ -1,4 +1,4 @@
-## Olá galera, como vão? 😊
+## Olá galera, como vão? 🖖🏽😊
 
 ### Objetivo!
 O que você verá por aqui?? Então, o objetivo era fazer um campo minado interativo em C e empregar os conceitos de alocação dinâmica de matrizes construídas como vetor de
@@ -32,16 +32,16 @@ todos os valores sem os ‘x’.
 ## Como executar!
 
 Primeiramente, verifique se o seu computador tem o compilador GCC instalado.
-Caso não tenha, siga as dicas abaixo 👇🏽.
+Caso não tenha, siga as dicas abaixo, no terminal do seu computador 👇🏽.
 
 ```bash
 
-# •	Windows: Execute no terminal
+# •	Windows
 $ wsl --install
 $ sudo apt update
 $ sudo apt install gcc
 
-# •	Linux (Ubuntu/Debian): Execute no terminal
+# •	Linux (Ubuntu/Debian)
 $ sudo apt update
 $ sudo apt install gcc
 
