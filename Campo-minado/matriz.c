@@ -108,3 +108,45 @@ void imprimirMatriz(int nivel, int **matX){
         printf("\n");
     }
 }
+
+/*Funcao VOID;
+Responsavel por liberar a matriz
+    - Parametros:
+        - mat: variavel do tipo ponteiro de ponteiro que representa a matriz que o usuario ira liberar.
+        - qtd_linhas: variavel do tipo inteiro usada para especificar a quantidade de linhas da matriz.
+*/
+void liberar_matriz(int **mat, int qtd_linhas){
+  for(int i = 0; i < qtd_linhas; i++){
+    free(mat[i]);
+  }
+  free(mat);
+}
+
+/*Funcao **Int;
+Responsavel por alocar a matriz
+    - Parametros:
+        - linhas: variavel do tipo inteiro usada para especificar a quantidade de linhas da matriz.
+        - colunas: variavel do tipo inteiro usada para especificar a quantidade de colunas da matriz.
+*/
+int **alocar_matriz(int linhas, int colunas){
+  int **mat = (int **) malloc(linhas * sizeof(int *));
+
+    if (mat == NULL) {
+        printf("Erro ao alocar memória para o jogo.\n");
+        free(mat);
+        return NULL;
+    }
+
+  for(int i = 0; i < linhas; i++){
+    mat[i] = (int *) malloc(colunas * sizeof(int));
+    if (mat[i] == NULL) {
+        printf("Erro ao alocar memória para o jogo.\n");
+        free(mat[i]);
+        free(mat);
+        return NULL;
+    }
+  }
+  
+
+  return mat;
+}

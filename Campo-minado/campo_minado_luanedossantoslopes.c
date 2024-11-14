@@ -27,53 +27,24 @@ int main(){
         menu(&op, &nivel, &numBombas);
          int **mat = NULL,**matX = NULL;
         if (op != 4){
-            mat = (int**) malloc(nivel * sizeof(int*));
-            matX = (int**) malloc(nivel * sizeof(int*));
-
-        if (mat == NULL || matX == NULL) {
-                printf("Erro ao alocar memória para o jogo.\n");
-                free(mat);
-                free(matX);
-                return 1;
-            }
-
-            for(int i = 0; i < nivel; i++){
-                mat[i] = (int*) malloc(nivel * sizeof(int));
-                matX[i] = (int*) malloc(nivel * sizeof(int));
-                
-            if (mat[i] == NULL || matX[i] == NULL) {
-                    printf("Erro ao alocar memória para o jogo.\n");
-                    free(mat[i]);
-                    free(matX[i]);
-                    free(mat);
-                    free(matX);
-                    return 1;
-                }
-            }
+            mat = alocar_matriz(nivel, nivel);
+            matX = alocar_matriz(nivel, nivel);
 
             inicializarMatriz(nivel, USERX, matX);
             iniciarMatrizBombas(nivel, numBombas, mat);
             // imprimirMatriz(nivel, mat);
             iniciarJogo(&op, nivel, mat, matX);
 
-            for(int i = 0; i < nivel; i++){
-                free(mat[i]);
-                free(matX[i]);
-            }
-            free(mat);
-            free(matX);
+            liberar_matriz(mat, nivel);
+            liberar_matriz(matX, nivel);
         }else{
             printf("\033[1;32mObrigado por jogar!!\n Ate a proxima\033[0m\n");
             if (mat != NULL || matX != NULL){
                 for(int i = 0; i < nivel; i++){
-                    free(mat[i]);
-                    free(matX[i]);
+                    liberar_matriz(mat, nivel);
+                    liberar_matriz(matX, nivel);
                 }
             }
-            
-            free(mat);
-            free(matX);
-
             return 1;
         }
 
