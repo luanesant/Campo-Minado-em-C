@@ -51,7 +51,7 @@ para executar o programa siga os comandos entre na pasta do projeto Campo-Minado
 
 ```bash
 
-$ gcc -o campo_minado campo_minado_luanedossantoslopes.c
+$ gcc -o campo_minado campo_minado_luanedossantoslopes.c matriz.c log.c
 $ ./campo_minado
 
 ```
