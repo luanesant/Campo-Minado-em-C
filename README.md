@@ -37,12 +37,12 @@ Caso não tenha, siga as dicas abaixo, no terminal do seu computador 👇🏽.
 
 ```bash
 
-# •	Windows
-$ wsl --install
+# •	Linux - Ubuntu ou Debian
 $ sudo apt update
 $ sudo apt install gcc
 
-# •	Linux - Ubuntu ou Debian
+# •	Windows
+$ wsl --install
 $ sudo apt update
 $ sudo apt install gcc
 
@@ -53,6 +53,21 @@ para executar o programa siga os comandos entre na pasta do projeto Campo-Minado
 
 $ gcc -o campo_minado campo_minado_luanedossantoslopes.c matriz.c log.c
 $ ./campo_minado
+
+```
+
+ou para rodar com testes pré-definidos use:
+```bash
+
+# •	Linux - Ubuntu ou Debian
+$ ./campo_minado < teste.txt
+
+# •	Windows
+# •	SEM o WSL - Sem os comandos do linux (Use o prompt de comando ou o powershell)
+$ Get-Content teste.txt | .\campo_minado.exe
+
+# •	COM o WSL - Com os comandos do linux (prompt de comando)
+$ campo_minado.exe < teste.txt
 
 ```
 
