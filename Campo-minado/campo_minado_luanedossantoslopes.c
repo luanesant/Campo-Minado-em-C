@@ -139,7 +139,7 @@ void iniciarJogo(int *opcao, int nivel, int **mat, int **matX){
     while(gameOver == 0){
         coordenadas = scanf("%d,%d", &cordUserX, &cordUserY);
         if(coordenadas == 2){
-            registrarJogada(log, mat, nivel, nivel, cordUserX, cordUserY);
+            registrarJogada(log, cordUserX, cordUserY);
             if(cordUserX-1 >= 0 && cordUserX-1 < nivel && cordUserY-1 >= 0 && cordUserY-1 < nivel){
                 if(matX[cordUserX-1][cordUserY-1] == USERX){
                     limparTela();
@@ -147,11 +147,13 @@ void iniciarJogo(int *opcao, int nivel, int **mat, int **matX){
                     if(mat[cordUserX-1][cordUserY-1] == BOMBAS){
                         matX[cordUserX-1][cordUserY-1] = BOMBAS;
                         imprimirMatriz(nivel, matX);
+                        registrarMatriz(log, mat, nivel, nivel);
                         win = 0;
                         gameOver = 1;
                     }else{
                         liberarCoordenada(nivel, cordUserX-1, cordUserY-1, mat, matX);
                         imprimirMatriz(nivel, matX);
+                        registrarMatriz(log, mat, nivel, nivel);
                         if(matrizCompleta(nivel, mat, matX)){
                             win = 1;
                             gameOver = 1;
@@ -160,15 +162,18 @@ void iniciarJogo(int *opcao, int nivel, int **mat, int **matX){
                         }
                     }
                 }else{
+                    registrarMatriz(log, mat, nivel, nivel);
                     printf("\n\033[1;31mOPS! Voce ja tentou essas danadinho!\033[0m");
                     printf("\n\033[1;32mDigite as novas cordenadas x,y: \033[0m");
                 }
 
             }else{
+                registrarMatriz(log, mat, nivel, nivel);
                 printf("\n\033[1;31mOPS!! Coordenadas inexistentes \(-_-)/\033[0m");
                 printf("\n\033[1;32mDigite as novas cordenadas x,y: \033[0m");
             }
         }else{
+            registrarMatriz(log, mat, nivel, nivel);
             printf("\n\033[1;31mOPS!! Entrada invalida. \(-_-)/\033[0m");
             printf("\n\033[1;32mDigite as cordenadas x,y: \033[0m");
             while (getchar() != '\n');
@@ -181,10 +186,12 @@ void iniciarJogo(int *opcao, int nivel, int **mat, int **matX){
         imprimirMatriz(nivel, matX);
         printf("\n\033[1;31mCampo Minado Final\033[0m\n");
         imprimirMatriz(nivel, mat);
+        registrarStatus(log, win);
     }else{
-        printf("\t\n\n\033[1;31mGAME OVER :-(\033[0m\n\n");
+        printf("\t\n\n\033[1;31mVoce Perdeu\nGAME OVER :-(\033[0m\n\n");
         printf("\033[1;31mCampo Minado Resultado Final\033[0m\n");
         imprimirMatriz(nivel, mat);
+        registrarStatus(log, win);
     }
 
     // Finaliza o log no final do jogo

@@ -15,8 +15,10 @@ typedef struct {
 // Funções para o TAD Log
 Log* criarArquivo(const char* nome_do_arquivo);
 Log* iniciarLog(const char* nome_do_arquivo);
-void registrarJogada(Log* log, int** matriz, int linhas, int colunas, int x, int y);
+void registrarJogada(Log* log, int x, int y);
+void registrarMatriz(Log* log, int** matriz, int linhas, int colunas);
 void finalizarLog(Log* log);
 void fecharArquivo(Log* log);
+void registrarStatus(Log* log, int ganhou);
 
 #endif // LOG_H
