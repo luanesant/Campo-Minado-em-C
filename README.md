@@ -1,9 +1,16 @@
 ## Olá galera, como vão? 🖖🏽😊
 Bem-vindos ao campo minado interativo em C! 💣💥
 
+### Atualizações!
+E aí, se é seu retorno ou sua primeira vez aqui, gostaria de deixar você por dentro das novidades.
+Dessa vez tivemos que implementar libs em c e manipulação de arquivos confira abaixo:
+- Criação da lib matriz.h com o arquivo matriz.c: Responsável por conter as funções que manipulam as matrizes do projeto
+- Criação da lib log.h com o arquivo log.c: Responsável por conter as funções que manipulam os arquivos de registro da partida
+- Criação do arquivo teste.txt: Esse arquivo contem algumas jogadas pré-definadas para você testar "mais rápido" o campo (Te indico brincar um pouco que é mais legal)
+Não esqueça de dar uma estrelinha ⭐⭐ 🤩
+
 ### Objetivo!
-O que você verá por aqui?? Então, o objetivo era fazer um campo minado interativo em C e empregar os conceitos de alocação dinâmica de matrizes construídas como vetor de
-ponteiros.
+O que você verá por aqui?? Então, o objetivo era fazer um campo minado interativo em C e empregar os conceitos de alocação dinâmica de matrizes construídas como vetor de ponteiros.
 
 ### Descrição do Jogo!
 - O usuário deve escolher o nivel do jogo se baseando nas seguintes propriedades:
